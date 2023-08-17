@@ -1,0 +1,1 @@
+INSERT INTO user_types(typ_description) VALUES('Common'), ('Merchandiser');
