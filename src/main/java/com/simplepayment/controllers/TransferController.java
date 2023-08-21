@@ -1,7 +1,5 @@
 package com.simplepayment.controllers;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,21 +8,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.simplepayment.entities.Transfer;
-import com.simplepayment.repositories.TransferRepository;
+import com.simplepayment.services.TransferService;
 
 @RestController
 @RequestMapping("/transfer")
 public class TransferController {
 
     @Autowired
-    private TransferRepository transferRepository;
+    private TransferService transferService;
 
     @GetMapping("/{transferId}")
     public ResponseEntity<Transfer> getTransferById(@PathVariable Long transferId) {
-        Optional<Transfer> transfer = transferRepository.findById(transferId);
+        Transfer transfer = transferService.findById(transferId);
 
-        if (transfer.isPresent()) {
-            return ResponseEntity.ok(transfer.get());
+        if (transfer != null) {
+            return ResponseEntity.ok(transfer);
         }
 
         return ResponseEntity.notFound().build();
