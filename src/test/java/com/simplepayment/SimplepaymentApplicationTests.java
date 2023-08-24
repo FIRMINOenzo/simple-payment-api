@@ -12,6 +12,9 @@ import com.jayway.jsonpath.JsonPath;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SimplepaymentApplicationTests {
 
@@ -41,5 +44,32 @@ class SimplepaymentApplicationTests {
         ResponseEntity<String> response = restTemplate.getForEntity("/transfer/10000", String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
+    }
+
+    @Test
+    void shouldCreateATransfer() {
+        Map<String, Object> newTransfer = new HashMap<>();
+
+        newTransfer.put("sender_id", "1");
+        newTransfer.put("amount", "2.50");
+        newTransfer.put("receiver_id", "2");
+
+        ResponseEntity<String> response = restTemplate.postForEntity("/transfer", newTransfer, String.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+    }
+
+    @Test
+    void shouldReturnAForbiddenPostTransfer() {
+
+        Map<String, Object> newTransfer = new HashMap<>();
+
+        newTransfer.put("sender_id", "2");
+        newTransfer.put("amount", "2.50");
+        newTransfer.put("receiver_id", "1");
+
+        ResponseEntity<String> response = restTemplate.postForEntity("/transfer", newTransfer, String.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.FORBIDDEN);
     }
 }
