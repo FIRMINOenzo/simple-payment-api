@@ -1,7 +1,5 @@
 package com.simplepayment.entities;
 
-import java.math.BigDecimal;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -24,7 +22,7 @@ public class Transfer {
     private User sender;
 
     @Column(name = "tra_amount")
-    private BigDecimal amount;
+    private double amount;
 
     @ManyToOne
     @JoinColumn(name = "tra_receiver_id")
@@ -33,7 +31,7 @@ public class Transfer {
     public Transfer() {
     }
 
-    public Transfer(Long id, User sender, BigDecimal amount, User receiver) {
+    public Transfer(Long id, User sender, double amount, User receiver) {
         this.id = id;
         this.sender = sender;
         this.amount = amount;
@@ -56,11 +54,11 @@ public class Transfer {
         this.sender = sender;
     }
 
-    public BigDecimal getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(BigDecimal amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 
