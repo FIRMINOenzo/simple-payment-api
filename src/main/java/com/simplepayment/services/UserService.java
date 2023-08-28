@@ -3,10 +3,12 @@ package com.simplepayment.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.simplepayment.entities.User;
 import com.simplepayment.repositories.UserRepository;
 
+@Service
 public class UserService {
 
     @Autowired
