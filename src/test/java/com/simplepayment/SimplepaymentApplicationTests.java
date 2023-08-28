@@ -56,7 +56,7 @@ class SimplepaymentApplicationTests {
 
         ResponseEntity<String> response = restTemplate.postForEntity("/transfer", newTransfer, String.class);
 
-        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
     }
 
     @Test
