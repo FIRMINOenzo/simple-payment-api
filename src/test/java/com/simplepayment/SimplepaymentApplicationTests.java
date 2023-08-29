@@ -29,14 +29,14 @@ class SimplepaymentApplicationTests {
 
         DocumentContext documentContext = JsonPath.parse(response.getBody());
 
-        Number id = documentContext.read("$.id");
-        assertThat(id).isEqualTo(1);
+        String senderName = documentContext.read("$.senderName");
+        assertThat(senderName).isEqualTo("Enzo Campanari");
 
-        Number sender_id = documentContext.read("$.sender.id");
-        assertThat(sender_id).isEqualTo(1);
+        double amount = documentContext.read("$.amount");
+        assertThat(amount).isEqualTo(12.30);
 
-        Number receiver_id = documentContext.read("$.receiver.id");
-        assertThat(receiver_id).isEqualTo(2);
+        String receiverName = documentContext.read("$.receiverName");
+        assertThat(receiverName).isEqualTo("Pedro Cavalo");
     }
 
     @Test

@@ -4,11 +4,14 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.simplepayment.dtos.TransferDTO;
 import com.simplepayment.dtos.TransferReqBodyDTO;
 import com.simplepayment.dtos.TransferResBodyDTO;
 import com.simplepayment.entities.Transfer;
 import com.simplepayment.entities.User;
+import com.simplepayment.projections.TransferMinProjection;
 import com.simplepayment.repositories.TransferRepository;
 
 @Service
@@ -20,11 +23,14 @@ public class TransferService {
     @Autowired
     private UserService userService;
 
-    public Transfer findById(Long id) {
-        Optional<Transfer> transfer = transferRepository.findById(id);
+    @Transactional(readOnly = true)
+    public TransferDTO findById(Long id) {
+        Optional<TransferMinProjection> transfer = transferRepository.getMinTransferInfo(id);
 
         if (transfer.isPresent()) {
-            return transfer.get();
+            TransferDTO response = new TransferDTO(transfer.get());
+
+            return response;
         }
 
         return null;

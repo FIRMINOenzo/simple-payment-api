@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.simplepayment.dtos.TransferDTO;
 import com.simplepayment.dtos.TransferReqBodyDTO;
 import com.simplepayment.dtos.TransferResBodyDTO;
-import com.simplepayment.entities.Transfer;
 import com.simplepayment.services.TransferService;
 
 @RestController
@@ -22,8 +22,8 @@ public class TransferController {
     private TransferService transferService;
 
     @GetMapping("/{transferId}")
-    public ResponseEntity<Transfer> getTransferById(@PathVariable Long transferId) {
-        Transfer transfer = transferService.findById(transferId);
+    public ResponseEntity<TransferDTO> getTransferById(@PathVariable Long transferId) {
+        TransferDTO transfer = transferService.findById(transferId);
 
         if (transfer != null) {
             return ResponseEntity.ok(transfer);
