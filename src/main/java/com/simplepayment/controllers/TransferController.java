@@ -37,8 +37,8 @@ public class TransferController {
     }
 
     @GetMapping("/all/{userId}")
-    public ResponseEntity<List<Transfer>> getAllTransferOfAUser(@PathVariable Long userId, Pageable settings) {
-        List<Transfer> response = transferService.getAllTransfersPage(userId, settings);
+    public ResponseEntity<List<TransferDTO>> getAllTransferOfAUser(@PathVariable Long userId, Pageable settings) {
+        List<TransferDTO> response = transferService.getAllTransfersPage(userId, settings);
 
         if (response != null) {
             return ResponseEntity.ok(response);

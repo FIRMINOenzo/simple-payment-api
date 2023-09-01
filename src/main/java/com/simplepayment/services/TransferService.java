@@ -90,14 +90,14 @@ public class TransferService {
     }
 
     @Transactional(readOnly = true)
-    public List<Transfer> getAllTransfersPage(Long id, Pageable settings) {
-        Optional<Page<Transfer>> page = transferRepository.findAllTransferFromUser(id, PageRequest.of(
+    public List<TransferDTO> getAllTransfersPage(Long id, Pageable settings) {
+        Optional<Page<TransferMinProjection>> page = transferRepository.findAllTransferFromUser(id, PageRequest.of(
                 settings.getPageNumber(),
                 settings.getPageSize(),
-                settings.getSortOr(Sort.by(Sort.Direction.ASC, "transferAmount"))));
+                settings.getSortOr(Sort.by(Sort.Direction.ASC, "tra_amount"))));
 
-        if (!page.isPresent()) {
-            return page.get().getContent();
+        if (page.isPresent()) {
+            return page.get().stream().map(TransferDTO::new).toList();
         }
 
         return null;
