@@ -1,8 +1,13 @@
 package com.simplepayment.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,5 +87,19 @@ public class TransferService {
         response.setMessage("transfer done");
 
         return response;
+    }
+
+    @Transactional(readOnly = true)
+    public List<Transfer> getAllTransfersPage(Long id, Pageable settings) {
+        Optional<Page<Transfer>> page = transferRepository.findAllTransferFromUser(id, PageRequest.of(
+                settings.getPageNumber(),
+                settings.getPageSize(),
+                settings.getSortOr(Sort.by(Sort.Direction.ASC, "transferAmount"))));
+
+        if (!page.isPresent()) {
+            return page.get().getContent();
+        }
+
+        return null;
     }
 }

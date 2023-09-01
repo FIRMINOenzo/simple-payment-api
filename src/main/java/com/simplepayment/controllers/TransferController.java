@@ -1,6 +1,9 @@
 package com.simplepayment.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.simplepayment.dtos.TransferDTO;
 import com.simplepayment.dtos.TransferReqBodyDTO;
 import com.simplepayment.dtos.TransferResBodyDTO;
+import com.simplepayment.entities.Transfer;
 import com.simplepayment.services.TransferService;
 
 @RestController
@@ -27,6 +31,17 @@ public class TransferController {
 
         if (transfer != null) {
             return ResponseEntity.ok(transfer);
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/all/{userId}")
+    public ResponseEntity<List<Transfer>> getAllTransferOfAUser(@PathVariable Long userId, Pageable settings) {
+        List<Transfer> response = transferService.getAllTransfersPage(userId, settings);
+
+        if (response != null) {
+            return ResponseEntity.ok(response);
         }
 
         return ResponseEntity.notFound().build();
